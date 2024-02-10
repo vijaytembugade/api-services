@@ -1,28 +1,28 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2021": true
+    env: {
+        browser: true,
+        es2021: true
     },
-    "extends": "standard-with-typescript",
-    "overrides": [
+    extends: "standard-with-typescript",
+    overrides: [
         {
-            "env": {
-                "node": true
+            env: {
+                node: true
             },
-            "files": [
+            files: [
                 ".eslintrc.{js,cjs}"
             ],
-            "parserOptions": {
-                "sourceType": "script"
+            parserOptions: {
+                sourceType: "script"
             }
         }
     ],
-    "parserOptions": {
-        "ecmaFeatures": {},
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+    parserOptions: {
+        ecmaFeatures: {},
+        ecmaVersion: "latest",
+        sourceType: "module"
     },
-    "rules": {
+    rules: {
         "@typescript-eslint/prefer-nullish-coalescing": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
     }
