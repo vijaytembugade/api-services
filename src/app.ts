@@ -1,8 +1,9 @@
 import express from 'express'
+import type { Express } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 
-const app = express()
+const app: Express = express()
 
 dotenv.config()
 app.use(cors())

@@ -22,6 +22,7 @@ module.exports = {
         ecmaVersion: "latest",
         sourceType: "module"
     },
+    ignorePatterns: ["node_modules", "./dist/*" ],
     rules: {
         "@typescript-eslint/prefer-nullish-coalescing": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
