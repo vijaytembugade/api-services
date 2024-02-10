@@ -8,7 +8,10 @@
     "dev": "tsx watch src/app.ts",
     "lint": "eslint . --ext .ts --fix  && prettier . --write"
   },
-  "keywords": ["backend", "nodejs"],
+  "keywords": [
+    "backend",
+    "nodejs"
+  ],
   "author": "Vijay Tembugade",
   "license": "ISC",
   "dependencies": {
