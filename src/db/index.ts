@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import { DB } from "../constant";
-import { colorErr, colorSuccess } from "@utils/colorCli";
+import mongoose from 'mongoose';
+import { DB } from '../constant';
+import { colorErr, colorSuccess } from '@utils/colorCli';
 
 async function connectDB() {
     try {
@@ -9,13 +9,13 @@ async function connectDB() {
                 `${process.env.MONGO_URI}/${DB.DB_NAME}`
             );
             console.log(
-                colorSuccess("connected to database"),
+                colorSuccess('connected to database'),
                 connectionInstance?.connection?.host
             );
             return true;
         }
         throw Error(
-            colorErr("MONGO_URL is not available in environment variables")
+            colorErr('MONGO_URL is not available in environment variables')
         );
     } catch (error) {
         console.log(colorErr(`Error: ${error}`));

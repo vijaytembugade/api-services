@@ -1,5 +1,5 @@
 // This file is for the colorful cli in node js
-import clc from "cli-color";
+import clc from 'cli-color';
 
 const colorErr = clc.red.bold;
 const colorWarn = clc.yellow;
