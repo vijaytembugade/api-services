@@ -10,15 +10,15 @@ async function connectDB() {
             );
             console.log(
                 colorSuccess("connected to database"),
-                connectionInstance.connection.host
+                connectionInstance?.connection?.host
             );
-        } else {
-            throw Error(
-                colorErr("MONGO_URL is not available in environment variables")
-            );
+            return true;
         }
+        throw Error(
+            colorErr("MONGO_URL is not available in environment variables")
+        );
     } catch (error) {
-        console.log(error);
+        console.log(colorErr(`Error: ${error}`));
         process.exit(0);
     }
 }

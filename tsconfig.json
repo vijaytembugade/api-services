@@ -11,7 +11,8 @@
         "paths": {
             "@controller/*": ["controller/*"],
             "@utils/*": ["utils/*"]
-        }
+        },
+        "resolveJsonModule": true
     },
     "exclude": ["node_modules", "__test__"]
 }
