@@ -1,21 +1,24 @@
-'use strict'
-const __importDefault = (this && this.__importDefault) || function (mod) {
-  return (mod?.__esModule) ? mod : { default: mod }
-}
-Object.defineProperty(exports, '__esModule', { value: true })
-const express_1 = __importDefault(require('express'))
-const dotenv_1 = __importDefault(require('dotenv'))
-const cors_1 = __importDefault(require('cors'))
-const app = (0, express_1.default)()
-dotenv_1.default.config()
-app.use((0, cors_1.default)())
-app.use(express_1.default.json())
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Apis are running' })
-})
-app.get('/test', (req, res) => {
-  res.status(200).json({ message: 'Apis are running- test' })
-})
-app.listen(process.env.PORT, () => {
-  console.log('app is running on PORT', process.env.PORT)
-})
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require("dotenv").config();
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const db_1 = __importDefault(require("./db"));
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.get("/", (req, res) => {
+    res.status(200).json({ message: "Apis are running" });
+});
+app.get("/test", (req, res) => {
+    res.status(200).json({ message: "Apis are running- test" });
+});
+(0, db_1.default)().then(() => {
+    app.listen(3000);
+}).catch(err => {
+    console.log(err);
+});
