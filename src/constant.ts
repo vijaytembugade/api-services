@@ -5,7 +5,7 @@ export enum DB {
 export enum USER_TYPE {
     PROJECT_MANAGER = 'PROJECT_MANAGER',
     TASK_OWNER = 'TASK_OWNER',
-    WATCHER = 'WATCHER'
+    WATCHER = 'WATCHER',
 }
 
 export enum PROJECT_STATUS {
@@ -18,7 +18,7 @@ export enum PROJECT_STATUS {
 export enum MODELS {
     PROJECT = 'Project',
     USER = 'User',
-    TASK = 'Task'
+    TASK = 'Task',
 }
 
 export enum TASK_STATUS {
