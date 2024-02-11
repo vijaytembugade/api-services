@@ -10,9 +10,8 @@
         "baseUrl": "./src/",
         "paths": {
             "@controller/*": ["controller/*"],
-            "@utils/*": ["utils/*"],
+            "@utils/*": ["utils/*"]
         }
     },
-    "exclude": ["node_modules", "__test__"],
-
+    "exclude": ["node_modules", "__test__"]
 }

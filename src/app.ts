@@ -10,7 +10,6 @@ import connectDB from "./db";
 
 const app: Express = express();
 
-
 app.use(cors());
 app.use(express.json());
 
