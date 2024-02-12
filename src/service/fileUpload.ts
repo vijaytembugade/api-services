@@ -5,7 +5,7 @@ import fs from 'fs';
 cloudinary.config({
     cloud_name: process.env.CLOUDNARY_NAME,
     api_key: process.env.CLOUDNARY_API_KEY,
-    api_secret: process.env.CLOUDNARY_API_SECRET
+    api_secret: process.env.CLOUDNARY_API_SECRET,
 });
 
 const fileUpload = async (localFilePath: string) => {
@@ -13,7 +13,9 @@ const fileUpload = async (localFilePath: string) => {
         if (!localFilePath) {
             throw Error('Could not find the file path');
         }
-        const response = await cloudinary.uploader.upload(localFilePath, { resource_type: 'auto' });
+        const response = await cloudinary.uploader.upload(localFilePath, {
+            resource_type: 'auto',
+        });
         console.log(colorSuccess('File is uploaded!'), response?.url);
         return response;
     } catch (error) {
