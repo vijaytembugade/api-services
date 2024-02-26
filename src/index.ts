@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-import 'module-alias/register';
-
+import { replaceTscAliasPaths } from 'tsc-alias';
+replaceTscAliasPaths();
 import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
