@@ -6,7 +6,7 @@ import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import type { Express } from 'express';
-import { colorErr, colorInfo } from '@utils/colorCli';
+import { colorErr, colorInfo, colorSuccess } from '@utils/colorCli';
 import connectDB from './db';
 
 const app: Express = express();
@@ -32,6 +32,9 @@ const server = async () => {
                         `APIs are running on port ${process.env.PORT || 8000}`
                     )
                 );
+                console.log(
+                    colorSuccess(`See on http://localhost:${process.env.PORT}`)
+                )
             });
             return;
         }
