@@ -34,7 +34,7 @@ const server = async () => {
                 );
                 console.log(
                     colorSuccess(`See on http://localhost:${process.env.PORT}`)
-                )
+                );
             });
             return;
         }
