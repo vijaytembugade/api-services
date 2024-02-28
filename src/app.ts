@@ -5,8 +5,7 @@ import testRouter from '@routes/test.routes';
 
 const app: Express = express();
 
-
-app.use('/', testRouter)
+app.use('/', testRouter);
 app.use('/api/v1/user', userRouter);
 
 export default app;
