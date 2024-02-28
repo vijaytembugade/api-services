@@ -13,7 +13,7 @@
             "@routes/*": ["routes/*"],
             "@models/*": ["models/*"],
             "@service/*": ["service/*"],
-            "@middleware/*": ["middleware/*"],
+            "@middleware/*": ["middleware/*"]
         },
         "resolveJsonModule": true
     },
