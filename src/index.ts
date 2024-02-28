@@ -5,11 +5,9 @@ replaceTscAliasPaths();
 import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import type { Express } from 'express';
 import { colorErr, colorInfo, colorSuccess } from '@utils/colorCli';
 import connectDB from './db';
-
-const app: Express = express();
+import app from './app';
 
 app.use(
     cors({

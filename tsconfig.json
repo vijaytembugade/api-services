@@ -9,7 +9,11 @@
         "baseUrl": "./src/",
         "paths": {
             "@controller/*": ["controller/*"],
-            "@utils/*": ["utils/*"]
+            "@utils/*": ["utils/*"],
+            "@routes/*": ["routes/*"],
+            "@models/*": ["models/*"],
+            "@service/*": ["service/*"],
+            "@middleware/*": ["middleware/*"],
         },
         "resolveJsonModule": true
     },
