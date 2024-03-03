@@ -5,10 +5,10 @@ import bcrypt from 'bcrypt';
 
 const userSchema = new Schema(
     {
-        userName: {
+        username: {
             type: String,
             unique: true,
-            required: [true, 'Username is required'],
+            required: [true, 'username is required'],
             lowercase: true,
             trim: true,
             index: true,
@@ -24,7 +24,7 @@ const userSchema = new Schema(
             unique: true,
             required: [true, 'password is required'],
         },
-        USER_TYPE: {
+        userType: {
             type: String,
             enum: [
                 USER_TYPE.PROJECT_MANAGER,
@@ -62,7 +62,7 @@ userSchema.method('generateAccessToken', async function () {
     await jwt.sign(
         {
             _id: this._id,
-            username: this.userName,
+            username: this.username,
             email: this.email,
         },
         `${process.env.ACCESS_TOKEN_SECRET}`,

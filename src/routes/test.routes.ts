@@ -5,7 +5,7 @@ const router = Router();
 router.route('/').get((req, res) => {
     res.json({
         status: 'OK',
-        message: "API's are running",
+        message: 'APIs are running',
     });
 });
 
