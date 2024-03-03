@@ -1,24 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-import { replaceTscAliasPaths } from 'tsc-alias';
-replaceTscAliasPaths();
-import cors from 'cors';
-import express from 'express';
-import cookieParser from 'cookie-parser';
 import { colorErr, colorInfo, colorSuccess } from '@utils/colorCli';
-import connectDB from './db';
+import { replaceTscAliasPaths } from 'tsc-alias';
 import app from './app';
-
-app.use(
-    cors({
-        origin: process.env.CORS_ORIGIN,
-        credentials: true,
-    })
-);
-app.use(express.json({ limit: '16kb' }));
-app.use(express.urlencoded({ extended: true, limit: '8kb' }));
-app.use(express.static('public'));
-app.use(cookieParser());
+import connectDB from './db';
+replaceTscAliasPaths();
 
 const server = async () => {
     try {
