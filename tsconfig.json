@@ -8,12 +8,13 @@
         "skipLibCheck": true,
         "baseUrl": "./src/",
         "paths": {
-            "@controller/*": ["controller/*"],
+            "@controllers/*": ["controllers/*"],
             "@utils/*": ["utils/*"],
             "@routes/*": ["routes/*"],
             "@models/*": ["models/*"],
             "@service/*": ["service/*"],
-            "@middleware/*": ["middleware/*"]
+            "@middlewares/*": ["middlewares/*"],
+            "@validator/*": ["validator/*"]
         },
         "resolveJsonModule": true
     },
