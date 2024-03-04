@@ -1,3 +1,8 @@
+export enum ENV {
+    dev = 'dev',
+    prod = 'prod'
+}
+
 export enum DB {
     DB_NAME = 'GENERATIVE',
 }

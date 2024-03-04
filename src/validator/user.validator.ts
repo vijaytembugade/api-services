@@ -43,7 +43,6 @@ export const registerUserValidator = checkSchema({
     },
     avatar: {
         optional: true,
-        isURL: { errorMessage: 'Invalid Image URL' },
     },
     isAdmin: {
         optional: true,

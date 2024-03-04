@@ -1,5 +1,6 @@
 import { colorErr, colorSuccess } from '@utils/colorCli';
 import { v2 as cloudinary } from 'cloudinary';
+import { ENV } from 'constant';
 import fs from 'fs';
 
 cloudinary.config({
@@ -17,6 +18,10 @@ const fileUpload = async (localFilePath: string) => {
             resource_type: 'auto',
         });
         console.log(colorSuccess('File is uploaded!'), response?.url);
+
+        if (process?.env?.ENV !== ENV.dev) {
+            fs.unlinkSync(localFilePath);
+        }
         return response;
     } catch (error) {
         console.log(colorErr(error));
