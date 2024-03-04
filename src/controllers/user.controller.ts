@@ -5,8 +5,7 @@ import fileUpload from '@service/fileUpload';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
-        const { username, email, password, userType, isAdmin } =
-            req.body;
+        const { username, email, password, userType, isAdmin } = req.body;
 
         const userExit = await User.findOne({ $or: [{ username }, { email }] });
         if (userExit) {
@@ -18,16 +17,18 @@ export const registerUser = async (req: Request, res: Response) => {
             throw new Error('Email is is already in use');
         }
 
-        const files = req?.files as { [fieldname: string]: Express.Multer.File[] };
+        const files = req?.files as {
+            [fieldname: string]: Express.Multer.File[];
+        };
         const avatarImg = files?.avatar[0]?.path;
 
         if (!avatarImg) {
-            throw new Error("Avatar image is not available")
+            throw new Error('Avatar image is not available');
         }
 
-        const avatarUrl = await fileUpload(avatarImg)
+        const avatarUrl = await fileUpload(avatarImg);
         if (!avatarUrl) {
-            throw new Error("Avatar image upload failed")
+            throw new Error('Avatar image upload failed');
         }
 
         const user = await User.create({
@@ -39,16 +40,17 @@ export const registerUser = async (req: Request, res: Response) => {
             avatar: avatarUrl.url,
         });
 
-        const createdUser = await User.findById(user._id).select("-password -refreshToken")
+        const createdUser = await User.findById(user._id).select(
+            '-password -refreshToken'
+        );
 
         if (!createdUser) {
-            throw Error("User creation failed")
+            throw Error('User creation failed');
         }
 
         res.status(201).json({
             createdUser,
         });
-
     } catch (err) {
         apiError(req, res, err, 400);
     }

@@ -9,17 +9,17 @@ import upload from '@middlewares/multer.middleware';
 
 const router = Router();
 
-router
-    .route('/register')
-    .post(registerUserValidator,
-        requestValidator,
-        upload.fields([
-            {
-                name: "avatar",
-                maxCount: 1
-            }]),
-        registerUser
-    );
+router.route('/register').post(
+    registerUserValidator,
+    requestValidator,
+    upload.fields([
+        {
+            name: 'avatar',
+            maxCount: 1,
+        },
+    ]),
+    registerUser
+);
 
 router
     .route('/getUserById/:id')

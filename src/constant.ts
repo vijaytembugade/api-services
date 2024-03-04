@@ -1,6 +1,6 @@
 export enum ENV {
     dev = 'dev',
-    prod = 'prod'
+    prod = 'prod',
 }
 
 export enum DB {
