@@ -3,14 +3,14 @@ import { v2 as cloudinary } from 'cloudinary';
 import { ENV } from 'constant';
 import fs from 'fs';
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDNARY_NAME,
-    api_key: process.env.CLOUDNARY_API_KEY,
-    api_secret: process.env.CLOUDNARY_API_SECRET,
-});
-
 const fileUpload = async (localFilePath: string) => {
     try {
+        cloudinary.config({
+            cloud_name: process.env.CLOUDNARY_NAME,
+            api_key: process.env.CLOUDNARY_API_KEY,
+            api_secret: process.env.CLOUDNARY_API_SECRET,
+        });
+
         if (!localFilePath) {
             throw Error('Could not find the file path');
         }

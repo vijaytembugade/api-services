@@ -4,6 +4,8 @@ import { colorErr, colorInfo, colorSuccess } from '@utils/colorCli';
 import { replaceTscAliasPaths } from 'tsc-alias';
 import app from './app';
 import connectDB from './db';
+import { connectRedis } from '@service/redis';
+
 replaceTscAliasPaths();
 
 const server = async () => {
@@ -28,4 +30,5 @@ const server = async () => {
     }
 };
 
+connectRedis();
 server();
