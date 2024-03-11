@@ -1,9 +1,9 @@
-import express from 'express';
-import type { Express } from 'express';
-import userRouter from '@routes/user.routes';
 import testRouter from '@routes/test.routes';
+import userRouter from '@routes/user.routes';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import type { Express } from 'express';
+import express from 'express';
 
 const app: Express = express();
 app.use(

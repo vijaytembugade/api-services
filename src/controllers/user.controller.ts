@@ -2,6 +2,7 @@ import apiError from '@service/error';
 import type { Request, Response } from 'express';
 import { User } from '@models/user.model';
 import fileUpload from '@service/fileUpload';
+import { redisClient } from '@service/redis';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
@@ -51,6 +52,10 @@ export const registerUser = async (req: Request, res: Response) => {
             throw Error('User creation failed');
         }
 
+        await redisClient.set(
+            createdUser._id.valueOf(),
+            JSON.stringify(createdUser)
+        );
         res.status(201).json({
             createdUser,
         });
@@ -63,11 +68,18 @@ export const getUserById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
 
-        const user = await User.findById(id).lean().select(['-password']);
-        if (!user) {
+        const userString = await redisClient.get(id);
+        if (userString) {
+            const user = JSON.parse(userString);
+            res.status(200).json({ ...user, cached: true });
+            return;
+        }
+
+        const userFromDb = await User.findById(id).lean().select(['-password']);
+        if (!userFromDb) {
             throw new Error('User Not Found');
         }
-        res.status(200).json({ ...user });
+        res.status(200).json({ ...userFromDb });
     } catch (err) {
         apiError(req, res, err, 400);
     }
