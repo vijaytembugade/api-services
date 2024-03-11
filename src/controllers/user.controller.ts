@@ -5,7 +5,6 @@ import fileUpload from '@service/fileUpload';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
-
         const { username, email, password, userType, isAdmin } = req.body;
 
         const userExit = await User.findOne({ $or: [{ username }, { email }] });
@@ -22,7 +21,6 @@ export const registerUser = async (req: Request, res: Response) => {
             [fieldname: string]: Express.Multer.File[];
         };
 
-
         const avatarImg = files?.avatar[0]?.path;
 
         if (!avatarImg) {
@@ -31,7 +29,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
         const avtarUrl = await fileUpload(avatarImg);
 
-        console.log(req.body, avtarUrl)
+        console.log(req.body, avtarUrl);
         if (!avtarUrl) {
             throw new Error('Avatar image upload failed');
         }

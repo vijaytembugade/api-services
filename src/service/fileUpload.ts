@@ -5,7 +5,6 @@ import fs from 'fs';
 
 const fileUpload = async (localFilePath: string) => {
     try {
-
         cloudinary.config({
             cloud_name: process.env.CLOUDNARY_NAME,
             api_key: process.env.CLOUDNARY_API_KEY,
