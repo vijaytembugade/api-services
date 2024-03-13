@@ -10,7 +10,7 @@ const connectRedis = async () => {
     });
     redisClient.on('error', (err) => console.log('Redis Client Error', err));
     await redisClient.connect();
-    console.log(colorInfo('Redis is also connected'));
+    console.log(colorInfo('Redis client is connected'));
 };
 
 export { connectRedis, redisClient };
