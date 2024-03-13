@@ -6,10 +6,10 @@ import apiError from '@service/error';
 
 const tokenValidator = (req: Request, res: Response, next: NextFunction) => {
     try {
-        let token = req?.headers?.authorization?.split(" ")[1];
+        let token = req?.headers?.authorization?.split(' ')[1];
         if (!token) {
             // if token if from query params
-            token = req?.query?.token
+            token = req?.query?.token;
         }
         if (!token) {
             throw Error('Provide a token');
@@ -24,8 +24,8 @@ const tokenValidator = (req: Request, res: Response, next: NextFunction) => {
             next();
         });
     } catch (err) {
-        apiError(req, res, err, 401)
+        apiError(req, res, err, 401);
     }
 };
 
-export default tokenValidator
+export default tokenValidator;
