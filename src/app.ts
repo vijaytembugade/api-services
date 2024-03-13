@@ -1,3 +1,4 @@
+import tokenValidator from '@middlewares/tokenValidator';
 import testRouter from '@routes/test.routes';
 import userRouter from '@routes/user.routes';
 import cookieParser from 'cookie-parser';
@@ -18,7 +19,8 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // routes
-app.use('/', testRouter);
-app.use('/api/v1/user', userRouter);
 
+app.use('/api/v1/user', userRouter);
+app.use(tokenValidator)
+app.use('/', testRouter);
 export default app;
