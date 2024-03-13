@@ -9,7 +9,7 @@ export const registerUser = async (req: Request, res: Response) => {
     try {
         const { username, email, password, userType, isAdmin } = req.body;
 
-        console.log(req.body)
+        console.log(req.body);
 
         const userExit = await User.findOne({ $or: [{ username }, { email }] });
         if (userExit) {
@@ -99,17 +99,17 @@ export const getUserById = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email }).lean().select(['-password']);;
+        const user = await User.findOne({ email }).lean().select(['-password']);
         if (!user) {
-            throw new Error("User does not exist")
+            throw new Error('User does not exist');
         }
 
-        const isPasswordCorrect = await User.isPasswordCorrect(password)
+        const isPasswordCorrect = await User.isPasswordCorrect(password);
         if (isPasswordCorrect) {
-            res.status(200).json({ user })
+            res.status(200).json({ user });
         }
     } catch (err) {
         apiError(req, res, err, 400);
     }
 
-}
+};

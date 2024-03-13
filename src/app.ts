@@ -21,6 +21,6 @@ app.use(cookieParser());
 // routes
 
 app.use('/api/v1/user', userRouter);
-app.use(tokenValidator)
+app.use(tokenValidator);
 app.use('/', testRouter);
 export default app;
