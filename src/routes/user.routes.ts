@@ -39,7 +39,6 @@ router.route('/register').post(
  */
 router.route('/login').post(loginUserValidator, loginUser);
 
-
 /**
  * Method: GET
  * Router: /getUserById/userId
@@ -48,6 +47,5 @@ router.route('/login').post(loginUserValidator, loginUser);
 router
     .route('/getUserById/:id')
     .get(tokenValidator, getUserByIdValidator, requestValidator, getUserById);
-
 
 export default router;

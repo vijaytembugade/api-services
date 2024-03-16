@@ -1,13 +1,11 @@
-
 import jwt from 'jsonwebtoken';
 import type { NextFunction, Request, Response } from 'express';
 import apiError from '@service/error';
 
-
 const tokenValidator = (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req?.headers?.authorization?.split(' ')[1];
-        console.log(token)
+        console.log(token);
         // if (!token) {
         //     // if token if from query params
         //     token = req?.query?.token
@@ -22,7 +20,7 @@ const tokenValidator = (req: Request, res: Response, next: NextFunction) => {
                 throw Error('Invalid Token');
             }
             if (decodedToken) {
-                console.log(decodedToken)
+                console.log(decodedToken);
                 req.body.tokenInfo = decodedToken;
             }
             next();
