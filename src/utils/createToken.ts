@@ -2,13 +2,13 @@ import jwt from 'jsonwebtoken';
 import type { Types } from 'mongoose';
 
 type BufferType = {
-    userId: Types.ObjectId;
+    id: Types.ObjectId;
 };
 
 const createToken = async (buffer: BufferType) => {
-    const { userId } = buffer;
+    const { id } = buffer;
     const secret = process?.env?.JWT_TOKEN_SECRET || 'randomTokenSecret';
-    return jwt.sign({ userId }, secret, { expiresIn: '7d' });
+    return jwt.sign({ id }, secret, { expiresIn: '7d' });
 };
 
 export default createToken;

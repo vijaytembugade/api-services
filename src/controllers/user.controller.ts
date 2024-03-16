@@ -4,6 +4,8 @@ import { User } from '@models/user.model';
 import fileUpload from '@service/fileUpload';
 import { redisClient } from '@service/redis';
 import createToken from '@utils/createToken';
+import bcrypt from 'bcrypt'
+import type { UserType } from './type';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
@@ -48,7 +50,7 @@ export const registerUser = async (req: Request, res: Response) => {
         });
 
         if (user) {
-            const refreshToken = await createToken(user?._id);
+            const refreshToken = await createToken({ id: user?._id });
             await User.findByIdAndUpdate(user._id, { refreshToken: refreshToken });
         }
 
@@ -60,9 +62,11 @@ export const registerUser = async (req: Request, res: Response) => {
             throw Error('User creation failed');
         }
 
+
+
         if (redisClient) {
             await redisClient.set(
-                createdUser._id.valueOf(),
+                createdUser?._id.valueOf(),
                 JSON.stringify(createdUser)
             );
         }
@@ -99,15 +103,32 @@ export const getUserById = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email }).lean().select(['-password']);
+        const user: UserType | null = await User.findOne({ email }).lean()
         if (!user) {
             throw new Error('User does not exist');
         }
+        const isPasswordCorrect = await bcrypt.compare(password, user?.password)
 
-        const isPasswordCorrect = await User.isPasswordCorrect(password);
-        if (isPasswordCorrect) {
-            res.status(200).json({ user });
+        if (!isPasswordCorrect) {
+            throw new Error("Password is incorrect");
         }
+
+        if (user && isPasswordCorrect) {
+            const refreshToken = await createToken({ id: user?._id });
+            console.log(refreshToken)
+            await User.findByIdAndUpdate(user._id, { refreshToken: refreshToken });
+        }
+
+        const { email: userEmail, refreshToken, username, avatar, isAdmin, userType, _id } = user;
+
+        if (redisClient) {
+            await redisClient.set(
+                user?._id.toJSON(),
+                JSON.stringify({ email: userEmail, refreshToken, username, avatar, isAdmin, userType, _id })
+            );
+        }
+
+        res.status(200).json({ email: userEmail, refreshToken, username, avatar, isAdmin, userType, id: _id })
     } catch (err) {
         apiError(req, res, err, 400);
     }
