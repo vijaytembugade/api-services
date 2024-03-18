@@ -1,7 +1,7 @@
 import { colorErr, colorSuccess } from '@utils/colorCli';
 import { v2 as cloudinary } from 'cloudinary';
 import { ENV } from 'constant';
-import fs from 'fs';
+import fs from 'node:fs';
 
 const fileUpload = async (localFilePath: string) => {
     try {

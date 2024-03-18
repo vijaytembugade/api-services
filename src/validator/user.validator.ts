@@ -50,6 +50,23 @@ export const registerUserValidator = checkSchema({
     },
 });
 
+export const loginUserValidator = checkSchema({
+    password: {
+        notEmpty: true,
+        exists: { errorMessage: 'Password is required' },
+        isString: { errorMessage: 'password should be string' },
+        isLength: {
+            options: { min: 5 },
+            errorMessage: 'Password should be at least 5 characters',
+        },
+    },
+    email: {
+        notEmpty: true,
+        isEmail: { errorMessage: 'Please provide valid email' },
+        trim: true,
+    },
+});
+
 export const getUserByIdValidator = checkSchema({
     id: {
         notEmpty: true,

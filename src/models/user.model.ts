@@ -1,9 +1,10 @@
-import { USER_TYPE, MODELS } from 'constant';
-import mongoose, { Schema } from 'mongoose';
-import jwt from 'jsonwebtoken';
+import type { UserType } from '@controllers/types';
 import bcrypt from 'bcrypt';
+import { MODELS, USER_TYPE } from 'constant';
+import jwt from 'jsonwebtoken';
+import mongoose, { Schema } from 'mongoose';
 
-const userSchema = new Schema(
+const userSchema = new Schema<UserType>(
     {
         username: {
             type: String,
@@ -54,11 +55,11 @@ userSchema.pre('save', async function (next) {
 });
 
 // custom method on schema
-userSchema.method('isPasswordCorrect', async function (password: string) {
+userSchema.methods.isPasswordCorrect = async function (password: string) {
     return await bcrypt.compare(password, this.password);
-});
+};
 
-userSchema.method('generateAccessToken', async function () {
+userSchema.methods.generateAccessToken = async function () {
     await jwt.sign(
         {
             _id: this._id,
@@ -68,9 +69,9 @@ userSchema.method('generateAccessToken', async function () {
         `${process.env.ACCESS_TOKEN_SECRET}`,
         { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
     );
-});
+};
 
-userSchema.method('generateRefreshToken', async function () {
+userSchema.methods.generateRefreshToken = async function () {
     await jwt.sign(
         {
             _id: this._id,
@@ -78,6 +79,6 @@ userSchema.method('generateRefreshToken', async function () {
         `${process.env.REFRESH_TOKEN_SECRET}`,
         { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
     );
-});
+};
 
 export const User = mongoose.model(MODELS.USER, userSchema);
