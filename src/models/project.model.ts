@@ -38,4 +38,4 @@ const projectSchema = new Schema(
 );
 
 projectSchema.plugin(mongooseAggregatePaginate);
-export const Project = mongoose.model(MODELS.USER, projectSchema);
+export const Project = mongoose.model(MODELS.PROJECT, projectSchema);

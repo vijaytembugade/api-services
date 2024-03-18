@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 import { DB } from '../constant';
 import { colorErr, colorSuccess } from '@utils/colorCli';
 
+/**
+ * Connects to the MongoDB database using the provided MONGO_URI environment variable.
+ *
+ * @returns {Promise<boolean>} Returns a promise that resolves to true if the connection is successful.
+ * @throws {Error} Throws an error if the MONGO_URI environment variable is not available.
+ */
 async function connectDB() {
     try {
         if (process?.env?.MONGO_URI) {

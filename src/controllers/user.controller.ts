@@ -5,13 +5,11 @@ import fileUpload from '@service/fileUpload';
 import { redisClient } from '@service/redis';
 import createToken from '@utils/createToken';
 import bcrypt from 'bcrypt';
-import type { UserType } from './type';
+import type { UserType } from './types';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
         const { username, email, password, userType, isAdmin } = req.body;
-
-        console.log(req.body);
 
         const userExit = await User.findOne({ $or: [{ username }, { email }] });
         if (userExit) {
@@ -63,7 +61,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
         if (redisClient) {
             await redisClient.set(
-                createdUser?._id.valueOf(),
+                createdUser?._id.toJSON(),
                 JSON.stringify(createdUser)
             );
         }
@@ -104,6 +102,10 @@ export const loginUser = async (req: Request, res: Response) => {
         if (!user) {
             throw new Error('User does not exist');
         }
+
+        if (!user?.password) {
+            throw new Error('Password not available');
+        }
         const isPasswordCorrect = await bcrypt.compare(
             password,
             user?.password
@@ -115,10 +117,12 @@ export const loginUser = async (req: Request, res: Response) => {
 
         if (user && isPasswordCorrect) {
             const refreshToken = await createToken({ id: user?._id });
-            console.log(refreshToken);
-            await User.findByIdAndUpdate(user._id, {
-                refreshToken: refreshToken,
-            });
+            await User.updateOne(
+                { _id: user._id },
+                {
+                    refreshToken: refreshToken,
+                }
+            );
         }
 
         const {

@@ -1,9 +1,10 @@
-import { USER_TYPE, MODELS } from 'constant';
-import mongoose, { Schema } from 'mongoose';
-import jwt from 'jsonwebtoken';
+import type { UserType } from '@controllers/types';
 import bcrypt from 'bcrypt';
+import { MODELS, USER_TYPE } from 'constant';
+import jwt from 'jsonwebtoken';
+import mongoose, { Schema } from 'mongoose';
 
-const userSchema = new Schema(
+const userSchema = new Schema<UserType>(
     {
         username: {
             type: String,
