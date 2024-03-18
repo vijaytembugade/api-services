@@ -1,6 +1,9 @@
 import type { Request, Response } from 'express';
 import { Project } from '@models/project.model';
 import apiError from '@service/error';
+import { User } from '@models/user.model';
+import { USER_TYPE } from 'constant';
+import getUserIdFromRequest from '@utils/getUserIdFromRequest';
 
 export const createProject = async (req: Request, res: Response) => {
     try {
@@ -12,10 +15,26 @@ export const createProject = async (req: Request, res: Response) => {
             projectStatus,
         } = req.body;
 
+        const userId = getUserIdFromRequest(req);
+
         const isProjectNameExist = await Project.findOne({ projectName });
 
         if (isProjectNameExist) {
             throw new Error('Project name already exist, try new one');
+        }
+
+        const userType = await User.findOne({ _id: userId }).select('userType');
+
+        if (userType) {
+            if (userType?.userType !== USER_TYPE.PROJECT_MANAGER) {
+                apiError(
+                    req,
+                    res,
+                    `Project can be created only by ${USER_TYPE.PROJECT_MANAGER}`,
+                    403
+                );
+                return;
+            }
         }
 
         const project = await Project.create({
