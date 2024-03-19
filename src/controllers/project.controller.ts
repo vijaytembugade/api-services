@@ -77,3 +77,23 @@ export const getProjectById = async (req: Request, res: Response) => {
         apiError(req, res, err, 400);
     }
 };
+
+export const updateProject = async (req: Request, res: Response) => {
+    const userId = getUserIdFromRequest(req);
+
+    const project = await Project.findById(id);
+
+    if (
+        userId !== project?.projectOwner?.valueOf() &&
+        !project?.userList?.includes(userId)
+    ) {
+        throw new Error('Unauthorised , cannot access the project');
+    }
+    if (!project) {
+        throw new Error('Project is not available');
+    }
+
+    const { id } = req.params;
+
+    res.send(200);
+};
