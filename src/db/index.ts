@@ -24,6 +24,7 @@ async function connectDB() {
             colorErr('MONGO_URL is not available in environment variables')
         );
     } catch (error) {
+        console.log(error);
         console.log(colorErr(`Error: ${error}`));
         process.exit(0);
     }
