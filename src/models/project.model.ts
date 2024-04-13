@@ -39,7 +39,10 @@ const projectSchema = new Schema(
 
 projectSchema.plugin(mongooseAggregatePaginate);
 
-projectSchema.statics.projectWithAccess = async function (userId: Schema.Types.ObjectId, projectId: Schema.Types.ObjectId,) {
+projectSchema.statics.projectWithAccess = async function (
+    userId: Schema.Types.ObjectId,
+    projectId: Schema.Types.ObjectId
+) {
     const project = this.findById(projectId);
 
     if (project?.projectOwner?.valueOf() === userId) {
@@ -47,9 +50,9 @@ projectSchema.statics.projectWithAccess = async function (userId: Schema.Types.O
     }
 
     if (project?.userList?.includes(userId)) {
-        return true
+        return true;
     }
 
-    return false
+    return false;
 };
 export const Project = mongoose.model(MODELS.PROJECT, projectSchema);

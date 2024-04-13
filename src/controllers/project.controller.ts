@@ -60,9 +60,12 @@ export const getProjectById = async (req: Request, res: Response) => {
 
         const userId = getUserIdFromRequest(req);
 
-        const isProjectWithAccess = await Project?.projectWithAccess(userId, id)
+        const isProjectWithAccess = await Project?.projectWithAccess(
+            userId,
+            id
+        );
 
-        console.log(isProjectWithAccess, "isProjectWithAccess")
+        console.log(isProjectWithAccess, 'isProjectWithAccess');
 
         const project = await Project.findById(id);
 
@@ -86,11 +89,9 @@ export const updateProject = async (req: Request, res: Response) => {
     const userId = getUserIdFromRequest(req);
     const { id } = req.params;
 
-    const isProjectWithAccess = await Project.projectWithAccess(userId, id)
+    const isProjectWithAccess = await Project.projectWithAccess(userId, id);
 
-    console.log(isProjectWithAccess, "isProjectWithAccess")
-
-
+    console.log(isProjectWithAccess, 'isProjectWithAccess');
 
     // if (
     //     userId !== project?.projectOwner?.valueOf() &&
@@ -101,7 +102,6 @@ export const updateProject = async (req: Request, res: Response) => {
     // if (!project) {
     //     throw new Error('Project is not available');
     // }
-
 
     res.send(200);
 };
