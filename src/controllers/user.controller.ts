@@ -10,8 +10,8 @@ export const registerUser = async (req: Request, res: Response) => {
     try {
         const { username, email, password, userType, isAdmin } = req.body;
 
-        const userExit = await User.findOne({ $or: [{ username }, { email }] });
-        if (userExit) {
+        const userExist = await User.findOne({ $or: [{ username }, { email }] });
+        if (userExist) {
             throw new Error('username or email already Exist');
         }
 
