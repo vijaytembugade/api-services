@@ -60,16 +60,20 @@ export const getProjectById = async (req: Request, res: Response) => {
 
         const userId = getUserIdFromRequest(req);
 
-        const project = await Project.findById(id);
+        const isProjectWithAccess = await Project?.projectWithAccess(
+            userId,
+            id
+        );
 
-        if (
-            userId !== project?.projectOwner?.valueOf() &&
-            !project?.userList?.includes(userId)
-        ) {
-            throw new Error('Unauthorised , cannot access the project');
+        if (!isProjectWithAccess) {
+            apiError(req, res, 'Unathorised Access', 403);
+            return;
         }
+
+        const project = await Project.findById(id).exec();
+
         if (!project) {
-            throw new Error('Project is not available');
+            apiError(req, res, 'Project Not Found', 400);
         }
 
         res.status(200).json(project);
@@ -79,21 +83,29 @@ export const getProjectById = async (req: Request, res: Response) => {
 };
 
 export const updateProject = async (req: Request, res: Response) => {
-    const userId = getUserIdFromRequest(req);
+    try {
+        const userId = getUserIdFromRequest(req);
+        const { id } = req.params;
 
-    const project = await Project.findById(id);
+        const isProjectWithAccess = await Project.projectWithAccess(userId, id);
 
-    if (
-        userId !== project?.projectOwner?.valueOf() &&
-        !project?.userList?.includes(userId)
-    ) {
-        throw new Error('Unauthorised , cannot access the project');
+        if (!isProjectWithAccess) {
+            apiError(req, res, 'Unathorised Access', 403);
+            return;
+        }
+
+        const body = req.body;
+
+        const updatedProject = await Project.findByIdAndUpdate(id, body, {
+            new: true,
+        });
+
+        if (!updateProject) {
+            throw new Error('Project Not Found');
+        }
+
+        res.status(200).json(updatedProject);
+    } catch (error) {
+        apiError(req, res, error, 400);
     }
-    if (!project) {
-        throw new Error('Project is not available');
-    }
-
-    const { id } = req.params;
-
-    res.send(200);
 };

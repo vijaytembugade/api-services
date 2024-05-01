@@ -5,7 +5,6 @@ import fileUpload from '@service/fileUpload';
 import { redisClient } from '@service/redis';
 import createToken from '@utils/createToken';
 import bcrypt from 'bcrypt';
-import type { UserType } from './types';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
@@ -98,7 +97,7 @@ export const getUserById = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const user: UserType | null = await User.findOne({ email }).lean();
+        const user = await User.findOne({ email }).lean();
         if (!user) {
             throw new Error('User does not exist');
         }

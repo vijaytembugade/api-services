@@ -1,8 +1,19 @@
-import type { UserType } from '@controllers/types';
 import bcrypt from 'bcrypt';
 import { MODELS, USER_TYPE } from 'constant';
 import jwt from 'jsonwebtoken';
 import mongoose, { Schema } from 'mongoose';
+import type { Types } from 'mongoose';
+
+export interface UserType {
+    _id: Types.ObjectId;
+    username: string;
+    email: string;
+    password: string;
+    userType?: USER_TYPE;
+    isAdmin?: boolean;
+    avatar?: string;
+    refreshToken?: string;
+}
 
 const userSchema = new Schema<UserType>(
     {
@@ -81,4 +92,4 @@ userSchema.methods.generateRefreshToken = async function () {
     );
 };
 
-export const User = mongoose.model(MODELS.USER, userSchema);
+export const User = mongoose.model<UserType>(MODELS.USER, userSchema);
