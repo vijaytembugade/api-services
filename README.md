@@ -15,3 +15,4 @@ Hosted url : https://api-services-3td0.onrender.com
 2. move inside `api-services` directory
 3. `npm install`
 4. `npm start`
+5. add local variables

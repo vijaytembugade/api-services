@@ -65,19 +65,16 @@ export const getProjectById = async (req: Request, res: Response) => {
             id
         );
 
-        console.log(isProjectWithAccess, 'isProjectWithAccess');
+        if (!isProjectWithAccess) {
+            apiError(req, res, 'Unathorised Access', 403);
+            return;
+        }
 
-        const project = await Project.findById(id);
+        const project = await Project.findById(id).exec();
 
-        // if (
-        //     userId !== project?.projectOwner?.valueOf() &&
-        //     !project?.userList?.includes(userId)
-        // ) {
-        //     throw new Error('Unauthorised , cannot access the project');
-        // }
-        // if (!project) {
-        //     throw new Error('Project is not available');
-        // }
+        if (!project) {
+            apiError(req, res, 'Project Not Found', 400);
+        }
 
         res.status(200).json(project);
     } catch (err) {
@@ -86,22 +83,29 @@ export const getProjectById = async (req: Request, res: Response) => {
 };
 
 export const updateProject = async (req: Request, res: Response) => {
-    const userId = getUserIdFromRequest(req);
-    const { id } = req.params;
+    try {
+        const userId = getUserIdFromRequest(req);
+        const { id } = req.params;
 
-    const isProjectWithAccess = await Project.projectWithAccess(userId, id);
+        const isProjectWithAccess = await Project.projectWithAccess(userId, id);
 
-    console.log(isProjectWithAccess, 'isProjectWithAccess');
+        if (!isProjectWithAccess) {
+            apiError(req, res, 'Unathorised Access', 403);
+            return;
+        }
 
-    // if (
-    //     userId !== project?.projectOwner?.valueOf() &&
-    //     !project?.userList?.includes(userId)
-    // ) {
-    //     throw new Error('Unauthorised , cannot access the project');
-    // }
-    // if (!project) {
-    //     throw new Error('Project is not available');
-    // }
+        const body = req.body;
 
-    res.send(200);
+        const updatedProject = await Project.findByIdAndUpdate(id, body, {
+            new: true,
+        });
+
+        if (!updateProject) {
+            throw new Error('Project Not Found');
+        }
+
+        res.status(200).json(updatedProject);
+    } catch (error) {
+        apiError(req, res, error, 400);
+    }
 };
